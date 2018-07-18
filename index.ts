@@ -1,4 +1,4 @@
-let debug		= require('debug')('rw-resource');
+// let debug		= require('debug')('rw-resource');
 
 export class NotLockedError extends Error
 {
