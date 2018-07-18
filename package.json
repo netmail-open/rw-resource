@@ -1,10 +1,11 @@
 {
   "name": "rw-resource",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple helper to protect access to a resource across async operations",
   "main": "index.js",
   "scripts": {
     "install": "tsc",
+	"prepare": "tsc",
     "test": "mocha -r ts-node/register test.ts"
   },
   "repository": {
