@@ -4,7 +4,7 @@
   "description": "A simple helper to protect access to a resource across async operations",
   "main": "index.js",
   "scripts": {
-    "postinstall": "tsc",
+    "install": "tsc",
     "test": "mocha -r ts-node/register test.ts"
   },
   "repository": {
