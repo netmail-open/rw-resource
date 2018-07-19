@@ -11,9 +11,13 @@ export class NotLockedError extends Error
 	}
 }
 
+export interface unlockCB {
+	(): void;
+}
+
 export default class RWRes
 {
-	value:				any;
+	public value:		any;
 
 	readers:			number;
 	writers:			number;
@@ -98,6 +102,24 @@ export default class RWRes
 			this.giveReaders();
 			return;
 		}
+	}
+
+	public lock(exclusive: boolean): Promise<unlockCB>
+	{
+		let lock = this;
+
+		return lock.take(exclusive)
+		.then((value) => {
+			return(() => {
+				if (lock) {
+					/* Only the first caller gets to act on the lock */
+					let l = lock;
+					lock = null;
+
+					l.leave();
+				}
+			});
+		});
 	}
 
 	giveExclusive(): void

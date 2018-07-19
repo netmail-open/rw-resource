@@ -208,9 +208,38 @@ describe('RW Resources', () => {
 		});
 	});
 
+	it('should allow using lock with an unlock cb', () => {
+		let Data	= new RWRes({ val: 3 });
+		let unlock;
 
+		return Data.lock(false)
+		.then((cb) => {
+			unlock = cb;
 
+			expect(Data.check()).to.equal(1);
+			return delay(250, null);
+		})
+		.then(() => {
+			unlock();
+			expect(Data.check()).to.equal(0);
 
+			return delay(250, null);
+		})
+		.then(() => {
+			unlock();
+			expect(Data.check()).to.equal(0);
 
+			return delay(250, null);
+		})
+		.then(() => {
+			unlock();
+			expect(Data.check()).to.equal(0);
+
+			return delay(250, null);
+		})
+		.then(() => {
+			expect(Data.check()).to.equal(0);
+		});
+	});
 
 });

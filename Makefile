@@ -1,12 +1,10 @@
-TSC_FLAGS		= --sourceMap -t ES6 --noEmitOnError --module commonjs
-
 all: index.js test.js
 
 node_modules:
 	npm install
 
 %.js: %.ts node_modules
-	tsc ${TSC_FLAGS} $<
+	tsc
 
 clean:
 	@rm *.js *.js.map || true

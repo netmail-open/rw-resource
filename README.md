@@ -59,6 +59,33 @@ Data.take(true)
 });
 
 
+/*
+	Alternative interface with a self-destructing unlock callback
+
+	Using .lock() returns a promise with a self destructing unlock callback
+	instead of the value (which can still be accessed with .value)
+
+	Unlike .leave() which must be called exactly once for each call to .take()
+	you may call the unlock callback as many times as you like with no side
+	effects.
+*/
+let unlock;
+
+Data.lock(true)
+.then((cb) => {
+	unlock = cb;
+
+	return delay(250, Data.value)
+})
+.then((data) => {
+	unlock();
+
+	cnsole.log('Oops, that typo will cause an exception to be thrown');
+})
+.catch((err) => {
+	/* This is safe even if we have already unlocked */
+	unlock();
+});
 
 
 /* Helper delay promise */
