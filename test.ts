@@ -242,4 +242,35 @@ describe('RW Resources', () => {
 		});
 	});
 
+
+	it('should allow the unlock callback with multiple consumers', () => {
+		let Data	= new RWRes({ val: 3 });
+
+		return Promise.all([
+			Data.lock(false),
+			Data.lock(false),
+			Data.lock(false)
+		])
+		.then((cbs) => {
+			expect(Data.check()).to.equal(3);
+
+			for (let cb of cbs) {
+				cb();
+			}
+
+			return delay(250, cbs);
+		})
+		.then((cbs) => {
+			expect(Data.check()).to.equal(0);
+
+			for (let cb of cbs) {
+				cb();
+			}
+
+			return delay(250, null);
+		})
+		.then(() => {
+			expect(Data.check()).to.equal(0);
+		});
+	});
 });
