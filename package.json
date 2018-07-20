@@ -1,6 +1,6 @@
 {
   "name": "rw-resource",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A simple helper to protect access to a resource across async operations",
   "main": "index.js",
   "scripts": {
@@ -35,5 +35,8 @@
   },
   "typescript": {
     "definition": "package.d.ts"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }
